@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# VS Code
+.vscode/
+
+# Testing and linting
+.pytest_cache/
+.ruff_cache/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Local data
+data/raw/*
+data/processed/*
+data/database/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/database/.gitkeep
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
