@@ -1,17 +1,12 @@
+"""Backward-compatible BTC downloader."""
+
 from pathlib import Path
 
-from obrm.data.providers.coingecko import CoinGeckoProvider
-from obrm.data.storage import save_parquet
-from obrm.data.validator import validate_price_data
+from obrm.core.paths import BTC_PRICE_FILE
+from obrm.data.engine import MarketDataEngine
 
 
 def download_btc_history() -> Path:
-    provider = CoinGeckoProvider()
-    df = provider.get_btc_daily_price()
-
-    validate_price_data(df)
-
-    output_path = Path("data/processed/btc_daily_price.parquet")
-    save_parquet(df, output_path)
-
-    return output_path
+    """Refresh and store BTC history through the Market Data Engine."""
+    MarketDataEngine().refresh_btc_price_history()
+    return BTC_PRICE_FILE
