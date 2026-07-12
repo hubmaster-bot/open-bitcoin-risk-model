@@ -2,4 +2,4 @@
 
 APP_NAME = "Open Bitcoin Risk Model"
 APP_SHORT_NAME = "OBRM"
-APP_VERSION = "0.3.2"
+APP_VERSION = "0.8.5d"

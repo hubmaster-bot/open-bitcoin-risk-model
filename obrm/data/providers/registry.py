@@ -2,12 +2,14 @@
 
 from obrm.data.providers.base import MarketDataProvider
 from obrm.data.providers.bitstamp import BitstampProvider
+from obrm.data.providers.coinmetrics import CoinMetricsProvider
 from obrm.data.providers.yahoo import YahooProvider
 
 
 def build_provider(name: str) -> MarketDataProvider:
     """Create a provider by configuration name."""
     providers: dict[str, type[MarketDataProvider]] = {
+        "coinmetrics": CoinMetricsProvider,
         "yahoo": YahooProvider,
         "bitstamp": BitstampProvider,
     }

@@ -8,16 +8,23 @@ import json
 
 import pandas as pd
 
+from obrm.data.merge import SourceSegment, source_segments
+
 
 @dataclass(frozen=True)
 class DatasetMetadata:
+    """Audit metadata for one locally stored dataset."""
+
     dataset: str
-    provider: str
     downloaded_at_utc: str
     coverage_start: str
     coverage_end: str
     rows: int
     sha256: str
+    days_behind_utc: int
+    is_stale: bool
+    stale_after_days: int
+    sources: tuple[SourceSegment, ...]
 
 
 def calculate_sha256(path: Path) -> str:
@@ -29,16 +36,27 @@ def calculate_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def build_metadata(df: pd.DataFrame, path: Path) -> DatasetMetadata:
-    """Create metadata for a standardized BTC price dataset."""
+def build_metadata(
+    df: pd.DataFrame,
+    path: Path,
+    stale_after_days: int = 2,
+) -> DatasetMetadata:
+    """Create audit metadata for a standardized BTC price dataset."""
+    latest_date = pd.Timestamp(df["date"].max()).date()
+    today_utc = datetime.now(timezone.utc).date()
+    days_behind = max((today_utc - latest_date).days, 0)
+
     return DatasetMetadata(
         dataset="btc_daily_price",
-        provider=str(df["provider"].iloc[-1]),
         downloaded_at_utc=datetime.now(timezone.utc).isoformat(),
         coverage_start=pd.Timestamp(df["date"].min()).date().isoformat(),
-        coverage_end=pd.Timestamp(df["date"].max()).date().isoformat(),
+        coverage_end=latest_date.isoformat(),
         rows=len(df),
         sha256=calculate_sha256(path),
+        days_behind_utc=days_behind,
+        is_stale=days_behind > stale_after_days,
+        stale_after_days=stale_after_days,
+        sources=source_segments(df),
     )
 
 

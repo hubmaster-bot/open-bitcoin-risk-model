@@ -1,12 +1,12 @@
 # Changelog
 
-## 0.3.2
+## 0.8.5d — Documentation Foundation
 
-- Added the Market Data Engine.
-- Added provider abstraction and provider registry.
-- Added Yahoo and Bitstamp implementations.
-- Added automatic provider fallback.
-- Added dataset metadata and SHA-256 hashing.
-- Updated the dashboard to load data through the engine.
-- Standardized displayed dates as `DD-Mon-YYYY`.
-- Added validation tests for the standard price schema.
+- Added the in-app Documentation Hub.
+- Added the complete initial User Guide.
+- Expanded the Research Handbook.
+- Added the initial Developer Guide.
+- Added the Model Maturity Scorecard.
+- Added ADR-017 for documentation architecture.
+- Documented interpretation, limitations, architecture, data flow, testing, and extension rules.
+- Completed the v0.8.5 explainability series.

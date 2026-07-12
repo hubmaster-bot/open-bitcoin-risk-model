@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class AppConfig:
-    primary_provider: str = "yahoo"
-    fallback_providers: tuple[str, ...] = ("bitstamp",)
+    primary_provider: str = "coinmetrics"
+    fallback_providers: tuple[str, ...] = ("yahoo", "bitstamp")
     asset_symbol: str = "BTC-USD"
     update_frequency: str = "daily"
     display_date_format: str = "%d-%b-%Y"
