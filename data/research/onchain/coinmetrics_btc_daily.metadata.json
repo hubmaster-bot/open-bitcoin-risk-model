@@ -1,0 +1,24 @@
+{
+  "dataset": "btc_onchain_daily",
+  "provider": "Coin Metrics Community",
+  "asset": "btc",
+  "metrics": [
+    "CapMVRVCur",
+    "HashRate"
+  ],
+  "frequency": "1d",
+  "downloaded_at_utc": "2026-07-13T12:07:01.653167+00:00",
+  "coverage_start": "2009-01-09",
+  "coverage_end": "2026-07-12",
+  "rows": 6394,
+  "missing_dates": 0,
+  "days_behind_utc": 1,
+  "is_stale": false,
+  "stale_after_days": 3,
+  "sha256": "5d52ecf927c2ca030b2ad86ea08fe7ec0dbb9645a9e0ee82eee298a352d71f2d",
+  "source_endpoint": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics",
+  "provider_metadata": {
+    "catalog_endpoint": "https://community-api.coinmetrics.io/v4/catalog/asset-metrics",
+    "capabilities_reviewed": true
+  }
+}

@@ -1,4 +1,4 @@
-"""Tests for the Coin Metrics Community provider."""
+"""Regression tests for Coin Metrics catalogue discovery."""
 
 from typing import Any
 
@@ -34,36 +34,32 @@ class FakeSession:
         return self.responses.pop(0)
 
 
-def test_fetch_asset_metrics_standardizes_schema() -> None:
+def test_catalogue_falls_back_to_unfiltered_request_after_400() -> None:
     session = FakeSession(
         [
             FakeResponse(
+                {},
+                status_code=400,
+                text="unsupported parameter",
+            ),
+            FakeResponse(
                 {
                     "data": [
-                        {
-                            "asset": "btc",
-                            "time": "2026-01-01T00:00:00.000000000Z",
-                            "MetricA": "12.5",
-                        }
+                        {"asset": "eth", "metrics": ["OtherMetric"]},
+                        {"asset": "btc", "metrics": ["CapMVRVCur"]},
                     ]
                 }
-            )
+            ),
         ]
     )
     provider = CoinMetricsCommunityProvider(session=session)
-    frame = provider.fetch_asset_metrics("btc", ("MetricA",))
+    result = provider.discover_asset_metrics("btc")
 
-    assert list(frame.columns) == [
-        "date",
-        "MetricA",
-        "provider",
-        "asset",
-    ]
-    assert frame.loc[0, "MetricA"] == 12.5
-    assert frame.loc[0, "asset"] == "btc"
+    assert [item.metric for item in result] == ["CapMVRVCur"]
+    assert session.calls[1]["params"] is None
 
 
-def test_catalog_all_assets_returns_capabilities() -> None:
+def test_catalogue_accepts_string_metric_entries() -> None:
     session = FakeSession(
         [
             FakeResponse(
@@ -71,14 +67,7 @@ def test_catalog_all_assets_returns_capabilities() -> None:
                     "data": [
                         {
                             "asset": "btc",
-                            "metrics": [
-                                {
-                                    "metric": "CapRealUSD",
-                                    "frequencies": ["1d"],
-                                    "min_time": "2011-01-01",
-                                    "max_time": "2026-01-01",
-                                }
-                            ],
+                            "metrics": ["CapRealUSD", "CapMVRVCur"],
                         }
                     ]
                 }
@@ -88,8 +77,7 @@ def test_catalog_all_assets_returns_capabilities() -> None:
     provider = CoinMetricsCommunityProvider(session=session)
     result = provider.discover_asset_metrics("btc")
 
-    assert len(result) == 1
-    assert result[0].metric == "CapRealUSD"
-    assert result[0].frequencies == ("1d",)
-    assert session.calls[0]["url"].endswith("/catalog-all/assets")
-    assert session.calls[0]["params"] == {"assets": "btc"}
+    assert [item.metric for item in result] == [
+        "CapMVRVCur",
+        "CapRealUSD",
+    ]

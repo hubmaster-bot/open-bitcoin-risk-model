@@ -1,16 +1,13 @@
 # Changelog
 
-## 0.9.0 — On-Chain Data Engine
+## 0.9.4 — On-Chain Validation Lab
 
-- Added provider-independent research-data architecture.
-- Added Coin Metrics Community API v4 adapter.
-- Added BTC asset-metric capability discovery.
-- Added local capability catalogue storage.
-- Added canonical on-chain Parquet storage.
-- Added metadata, provenance, freshness, gap detection, and SHA-256 integrity.
-- Added graceful unavailable-metric validation.
-- Added the On-Chain Data Streamlit page.
-- Added provider, catalogue, validation, and storage tests.
-- Added ADR-018 and ADR-019.
-- Added handbook and developer documentation.
-- Did not yet change Composite Risk or decisions.
+- Added reusable forward-return labels.
+- Added score-band return analysis.
+- Added subdimension validation.
+- Added correlation and redundancy diagnostics.
+- Added a research-only Composite Risk v2 experiment.
+- Added visible Market Dimension readiness criteria.
+- Added the On-Chain Validation Lab Streamlit page.
+- Added validation tests, ADR-026, and handbook documentation.
+- Preserved all live Composite Risk and decision outputs.

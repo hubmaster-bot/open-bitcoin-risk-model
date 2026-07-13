@@ -1,4 +1,10 @@
-"""Coin Metrics Community research-data provider."""
+"""Coin Metrics Community research-data provider.
+
+Catalogue discovery uses ``catalog-all/assets`` because that endpoint returns
+asset records with their supported metrics and coverage. The provider first
+tries an asset-filtered request and falls back to the unfiltered catalogue when
+the Community deployment rejects the filter.
+"""
 
 from __future__ import annotations
 
@@ -16,6 +22,7 @@ class CoinMetricsCommunityProvider:
 
     name = "Coin Metrics Community"
     base_url = "https://community-api.coinmetrics.io/v4"
+    timeseries_page_size = 10000
 
     def __init__(
         self,
@@ -26,67 +33,126 @@ class CoinMetricsCommunityProvider:
         self.timeout_seconds = timeout_seconds
         self.session = session or requests.Session()
         self.session.headers.update(
-            {"User-Agent": "OBRM/0.9.0 research-data-client"}
+            {"User-Agent": "OBRM/0.9.1.3 research-data-client"}
         )
+
+    def _request_json(
+        self,
+        url: str,
+        *,
+        params: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        response = self.session.get(
+            url,
+            params=params,
+            timeout=self.timeout_seconds,
+        )
+
+        status_code = int(getattr(response, "status_code", 200))
+        if status_code >= 400:
+            body = str(getattr(response, "text", ""))[:1000].strip()
+            reason = str(getattr(response, "reason", "request failed"))
+            raise requests.HTTPError(
+                f"{status_code} error from Coin Metrics: "
+                f"{body or reason}",
+                response=response,
+            )
+
+        payload = response.json()
+        if not isinstance(payload, dict):
+            raise ValueError("Coin Metrics returned a non-object JSON payload.")
+        return payload
 
     def _get(
         self,
         path: str,
         params: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        response = self.session.get(
+        return self._request_json(
             f"{self.base_url}/{path.lstrip('/')}",
             params=params,
-            timeout=self.timeout_seconds,
         )
-        response.raise_for_status()
-        payload = response.json()
-        if not isinstance(payload, dict):
-            raise ValueError("Coin Metrics returned a non-object JSON payload.")
-        return payload
+
+    def _paged_get(
+        self,
+        path: str,
+        *,
+        params: dict[str, Any] | None = None,
+    ) -> list[dict[str, Any]]:
+        records: list[dict[str, Any]] = []
+        next_page_url: str | None = None
+
+        while True:
+            payload = (
+                self._request_json(next_page_url)
+                if next_page_url
+                else self._get(path, params=params)
+            )
+
+            data = payload.get("data", [])
+            if not isinstance(data, list):
+                raise ValueError("Coin Metrics response data must be a list.")
+
+            records.extend(item for item in data if isinstance(item, dict))
+            raw_next = payload.get("next_page_url")
+            next_page_url = str(raw_next) if raw_next else None
+
+            if not next_page_url:
+                break
+
+        return records
 
     def discover_asset_metrics(
         self,
         asset: str,
     ) -> tuple[MetricCapability, ...]:
         """Discover Community metrics and coverage for one asset."""
-        payload = self._get(
-            "catalog/asset-metrics",
-            params={"assets": asset, "limit": 10000},
-        )
-        records = payload.get("data", [])
+        requested_asset = asset.strip().lower()
+        if not requested_asset:
+            raise ValueError("Asset must not be empty.")
+
+        try:
+            records = self._paged_get(
+                "catalog-all/assets",
+                params={"assets": requested_asset},
+            )
+        except requests.HTTPError as exc:
+            response = exc.response
+            if response is None or int(getattr(response, "status_code", 0)) != 400:
+                raise
+            records = self._paged_get("catalog-all/assets")
+
         capabilities: list[MetricCapability] = []
 
         for record in records:
-            record_asset = str(record.get("asset", asset))
+            record_asset = str(record.get("asset", "")).strip().lower()
+            if record_asset != requested_asset:
+                continue
+
             metrics = record.get("metrics", [])
+            if not isinstance(metrics, list):
+                continue
 
             for metric in metrics:
-                metric_name = str(metric.get("metric", metric.get("name", "")))
-                if not metric_name:
-                    continue
-
-                frequencies = metric.get("frequencies", [])
-                if isinstance(frequencies, str):
-                    frequencies = [frequencies]
-
-                capabilities.append(
-                    MetricCapability(
-                        provider=self.name,
-                        asset=record_asset,
-                        metric=metric_name,
-                        frequencies=tuple(str(item) for item in frequencies),
-                        min_time=_optional_text(metric.get("min_time")),
-                        max_time=_optional_text(metric.get("max_time")),
-                        community_available=True,
-                        description=_optional_text(
-                            metric.get("description")
-                            or metric.get("display_name")
-                        ),
-                    )
+                capability = _capability_from_catalog_metric(
+                    provider=self.name,
+                    asset=record_asset,
+                    metric=metric,
                 )
+                if capability is not None:
+                    capabilities.append(capability)
 
-        return tuple(sorted(capabilities, key=lambda item: item.metric))
+        if not capabilities:
+            raise ValueError(
+                "Coin Metrics returned the asset catalogue, but no supported "
+                f"metrics were found for '{requested_asset}'."
+            )
+
+        unique = {
+            (item.asset, item.metric): item
+            for item in capabilities
+        }
+        return tuple(sorted(unique.values(), key=lambda item: item.metric))
 
     def fetch_asset_metrics(
         self,
@@ -97,43 +163,32 @@ class CoinMetricsCommunityProvider:
         start_time: str | None = None,
         end_time: str | None = None,
     ) -> pd.DataFrame:
-        """Fetch standardized Coin Metrics asset metrics."""
+        """Fetch and standardise Coin Metrics asset metrics."""
+        requested_asset = asset.strip().lower()
+        if not requested_asset:
+            raise ValueError("Asset must not be empty.")
         if not metrics:
             raise ValueError("At least one metric must be requested.")
 
         params: dict[str, Any] = {
-            "assets": asset,
+            "assets": requested_asset,
             "metrics": ",".join(metrics),
             "frequency": frequency,
-            "page_size": 10000,
+            "page_size": self.timeseries_page_size,
         }
         if start_time:
             params["start_time"] = start_time
         if end_time:
             params["end_time"] = end_time
 
-        records: list[dict[str, Any]] = []
-        next_page_url: str | None = None
-
-        while True:
-            if next_page_url:
-                response = self.session.get(
-                    next_page_url,
-                    timeout=self.timeout_seconds,
-                )
-                response.raise_for_status()
-                payload = response.json()
-            else:
-                payload = self._get("timeseries/asset-metrics", params=params)
-
-            records.extend(payload.get("data", []))
-            next_page_url = payload.get("next_page_url")
-            if not next_page_url:
-                break
+        records = self._paged_get(
+            "timeseries/asset-metrics",
+            params=params,
+        )
 
         if not records:
             raise ValueError(
-                f"Coin Metrics returned no data for {asset}: {metrics}."
+                f"Coin Metrics returned no data for {requested_asset}: {metrics}."
             )
 
         frame = pd.DataFrame(records)
@@ -154,7 +209,7 @@ class CoinMetricsCommunityProvider:
             output_columns.append(metric)
 
         frame["provider"] = self.name
-        frame["asset"] = asset
+        frame["asset"] = requested_asset
         output_columns.extend(["provider", "asset"])
 
         return (
@@ -166,8 +221,82 @@ class CoinMetricsCommunityProvider:
         )
 
     @staticmethod
-    def capability_as_dict(capability: MetricCapability) -> dict[str, Any]:
+    def capability_as_dict(
+        capability: MetricCapability,
+    ) -> dict[str, Any]:
         return asdict(capability)
+
+
+def _capability_from_catalog_metric(
+    *,
+    provider: str,
+    asset: str,
+    metric: object,
+) -> MetricCapability | None:
+    """Parse either string or object metric representations."""
+    if isinstance(metric, str):
+        name = metric.strip()
+        if not name:
+            return None
+        return MetricCapability(
+            provider=provider,
+            asset=asset,
+            metric=name,
+            frequencies=(),
+            min_time=None,
+            max_time=None,
+            community_available=True,
+            description=None,
+        )
+
+    if not isinstance(metric, dict):
+        return None
+
+    name = str(
+        metric.get("metric")
+        or metric.get("name")
+        or ""
+    ).strip()
+    if not name:
+        return None
+
+    return MetricCapability(
+        provider=provider,
+        asset=asset,
+        metric=name,
+        frequencies=_normalise_frequencies(
+            metric.get("frequencies", [])
+        ),
+        min_time=_optional_text(metric.get("min_time")),
+        max_time=_optional_text(metric.get("max_time")),
+        community_available=True,
+        description=_optional_text(
+            metric.get("description")
+            or metric.get("display_name")
+        ),
+    )
+
+
+def _normalise_frequencies(value: object) -> tuple[str, ...]:
+    if isinstance(value, str):
+        return (value,)
+
+    if not isinstance(value, list):
+        return ()
+
+    result: list[str] = []
+    for item in value:
+        if isinstance(item, str):
+            result.append(item)
+        elif isinstance(item, dict):
+            frequency = (
+                item.get("frequency")
+                or item.get("name")
+                or item.get("value")
+            )
+            if frequency:
+                result.append(str(frequency))
+    return tuple(result)
 
 
 def _optional_text(value: object) -> str | None:
