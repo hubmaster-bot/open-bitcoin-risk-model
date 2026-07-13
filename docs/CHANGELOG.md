@@ -1,12 +1,16 @@
 # Changelog
 
-## 0.8.5d — Documentation Foundation
+## 0.9.0 — On-Chain Data Engine
 
-- Added the in-app Documentation Hub.
-- Added the complete initial User Guide.
-- Expanded the Research Handbook.
-- Added the initial Developer Guide.
-- Added the Model Maturity Scorecard.
-- Added ADR-017 for documentation architecture.
-- Documented interpretation, limitations, architecture, data flow, testing, and extension rules.
-- Completed the v0.8.5 explainability series.
+- Added provider-independent research-data architecture.
+- Added Coin Metrics Community API v4 adapter.
+- Added BTC asset-metric capability discovery.
+- Added local capability catalogue storage.
+- Added canonical on-chain Parquet storage.
+- Added metadata, provenance, freshness, gap detection, and SHA-256 integrity.
+- Added graceful unavailable-metric validation.
+- Added the On-Chain Data Streamlit page.
+- Added provider, catalogue, validation, and storage tests.
+- Added ADR-018 and ADR-019.
+- Added handbook and developer documentation.
+- Did not yet change Composite Risk or decisions.
