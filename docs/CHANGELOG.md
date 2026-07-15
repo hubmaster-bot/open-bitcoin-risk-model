@@ -1,5 +1,27 @@
 # Changelog
 
+
+=======
+## v0.10.5
+
+- Added no-look-ahead future-return and maximum-drawdown labels for capital-flow research.
+- Added quantile-band separation tests across 30, 90, 180, and 365-day horizons.
+- Added chronological walk-forward stability diagnostics.
+- Added cross-provider score robustness gates for Coin Metrics, Glassnode, and CryptoQuant.
+- Added formal Promote, Research Only, and Not Ready governance outcomes.
+- Added immutable report hashing and JSON persistence.
+- Preserved Composite Risk v1 and all live decisions.
+
+## v0.10.4
+
+- Added declared metric mappings for Coin Metrics, Glassnode, CryptoQuant, and CoinGecko.
+- Added canonical provider normalization and pairwise equivalence diagnostics.
+- Added overlap, coverage, Pearson, Spearman, normalized-MAE, and direction-disagreement gates.
+- Added immutable validation-report hashing and JSON persistence.
+- Added a research-only Streamlit validation page.
+- Explicitly classified CoinGecko market capitalization as a proxy rather than realized-capital equivalence.
+- Kept Composite Risk unchanged.
+
 ## 0.10.3 — Realized Capital Flow Research
 
 - Added `obrm/research/capital_flow/` as a provider-neutral research module.

@@ -86,5 +86,9 @@ with st.expander("Methodology and limitations"):
 - A 30-day mean reduces noise; 90-day change, trend, and acceleration remain diagnostic.
 - Positive-direction semantics are explicit and provider definitions are never assumed equivalent.
 - Higher research scores mean stronger net capital inflow, not automatically lower investment risk.
+
 - Multi-provider equivalence and outcome validation are deferred to v0.10.4.
+
+- Multi-provider equivalence is available in v0.10.4 and outcome validation in v0.10.5.
+
 """)

@@ -16,4 +16,8 @@ Every import requires provider, provider metric, definition and licence informat
 
 ## Limitations
 
+
 The score is diagnostic, provider definitions may differ, and exchange netflow is only a proxy for sell-side pressure. Multi-provider equivalence and outcome validation are planned for v0.10.4.
+=======
+The score is diagnostic, provider definitions may differ, and exchange netflow is only a proxy for sell-side pressure. Multi-provider equivalence was completed in v0.10.4 and outcome validation in v0.10.5.
+
