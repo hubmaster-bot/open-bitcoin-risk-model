@@ -13,5 +13,7 @@
 | Walk-forward validation | Research Alpha | Future returns as labels only |
 | Explainability | Available | Decision Audit and progressive disclosure |
 | Transaction costs | Planned | Fees, spread, slippage, taxes |
-| On-chain dimensions | Planned | Targeted for v0.9.x |
+| On-chain research | Research Alpha | Validated evidence remains outside Composite Risk |
+| Evidence Registry | Available | Provider-independent evidence roadmap and coverage |
+| Provider Discovery | Research Alpha | Structured fallback-source assessment |
 | Macro dimensions | Planned | Post-v1.0 research |

@@ -1,0 +1,22 @@
+{
+  "candidate": "On-Chain Market Dimension",
+  "status": "not_ready",
+  "reviewed_at_utc": "2026-07-13T12:11:46.189099+00:00",
+  "readiness_status": "not ready",
+  "coverage_status": "partial",
+  "separation_status": "fail",
+  "independence_status": "fail",
+  "stability_status": "pass",
+  "rationale": [
+    "Evidence-category coverage is 50%; the provisional promotion threshold is 75%.",
+    "Forward-return ordering is not consistently monotonic across score bands.",
+    "The candidate signal is either highly correlated with an existing dimension or lacks sufficient correlation evidence."
+  ],
+  "next_actions": [
+    "Keep the on-chain score outside the live model.",
+    "Investigate missing Holder Behaviour evidence.",
+    "Investigate missing Realized Capital Flow evidence.",
+    "Revisit provider fallbacks before another promotion review."
+  ],
+  "live_model_changed": false
+}

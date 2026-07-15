@@ -42,12 +42,23 @@ sections = {
         ("Decision Audit", DOCS / "handbook" / "05_Decision_Audit.md"),
         ("Research Experience", DOCS / "handbook" / "06_Research_Experience.md"),
         ("Validation Philosophy", DOCS / "handbook" / "07_Validation_Philosophy.md"),
+        ("On-Chain Data Foundation", DOCS / "handbook" / "08_OnChain_Data_Foundation.md"),
+        ("On-Chain Analytics", DOCS / "handbook" / "09_OnChain_Analytics.md"),
+        ("Community Metric Validation", DOCS / "handbook" / "10_Community_Metric_Validation.md"),
+        ("Validated On-Chain Research", DOCS / "handbook" / "11_Validated_OnChain_Research.md"),
+        ("On-Chain Validation", DOCS / "handbook" / "12_OnChain_Validation.md"),
+        ("On-Chain Promotion Review", DOCS / "handbook" / "13_OnChain_Promotion_Review.md"),
+        ("Evidence Registry", DOCS / "handbook" / "14_Evidence_Registry.md"),
+        ("Fallback Provider Discovery", DOCS / "handbook" / "15_Fallback_Provider_Discovery.md"),
     ],
     "Developer Guide": [
         ("Architecture Overview", DOCS / "developer" / "01_Architecture.md"),
         ("Data Flow", DOCS / "developer" / "02_Data_Flow.md"),
         ("Adding a Market Dimension", DOCS / "developer" / "03_Adding_Dimensions.md"),
         ("Testing and Release Process", DOCS / "developer" / "04_Testing_and_Releases.md"),
+        ("Research Data Providers", DOCS / "developer" / "05_Research_Data_Providers.md"),
+        ("Evidence Registry", DOCS / "developer" / "06_Evidence_Registry.md"),
+        ("Provider Discovery", DOCS / "developer" / "07_Provider_Discovery.md"),
     ],
 }
 
@@ -82,7 +93,9 @@ scorecard = [
     ("Walk-forward validation", "Research Alpha", "Future returns used as labels only"),
     ("Explainability", "Available", "Decision Audit and progressive disclosure"),
     ("Transaction costs", "Planned", "Fees, spread, slippage, and taxes"),
-    ("On-chain dimensions", "Planned", "Scheduled for v0.9.x"),
+    ("On-chain research", "Research Alpha", "Validated evidence remains outside Composite Risk"),
+    ("Evidence Registry", "Available", "Provider-independent evidence roadmap and coverage"),
+    ("Provider Discovery", "Research Alpha", "Structured fallback-source assessment"),
     ("Macro dimensions", "Planned", "Post-v1.0 research"),
 ]
 
