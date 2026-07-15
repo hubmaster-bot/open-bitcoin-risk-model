@@ -1,7 +1,16 @@
 # Changelog
 
+## v1.0.0-rc.1
 
-=======
+- Added installable PEP 517 project metadata and a console entry point.
+- Declared Python 3.11–3.13 support and separated runtime from development dependencies.
+- Replaced the UTF-16 environment freeze with a portable runtime dependency specification.
+- Added automated release-readiness checks and tests.
+- Added an environment-variable template for four live providers without embedding credentials.
+- Added the v1.0 release checklist and ADR-034.
+- Cleaned release packaging of Git metadata, caches, bytecode, and local-only artifacts.
+- Preserved Composite Risk v1 and all evidence-governance boundaries.
+
 ## v0.10.5
 
 - Added no-look-ahead future-return and maximum-drawdown labels for capital-flow research.
@@ -21,6 +30,7 @@
 - Added a research-only Streamlit validation page.
 - Explicitly classified CoinGecko market capitalization as a proxy rather than realized-capital equivalence.
 - Kept Composite Risk unchanged.
+
 
 ## 0.10.3 — Realized Capital Flow Research
 
