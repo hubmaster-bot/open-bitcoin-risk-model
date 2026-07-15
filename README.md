@@ -4,7 +4,7 @@ OBRM is an evidence-first Bitcoin market-risk research and decision-support appl
 
 ## Release status
 
-This archive is **v1.0.0-rc.1**, the first v1.0 release candidate. Composite Risk v1 remains unchanged. Research evidence cannot affect live decisions without a separate, documented promotion and model-design release.
+This archive is **v1.0.0-rc.2**, the corrected v1.0 release candidate. Composite Risk v1 remains unchanged. Research evidence cannot affect live decisions without a separate, documented promotion and model-design release.
 
 ## Supported Python
 

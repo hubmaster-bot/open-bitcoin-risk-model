@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.0-rc.2
+
+- Added SciPy as an explicit runtime dependency for Spearman correlation.
+- Split deterministic repository checks from machine-dependent environment checks.
+- Excluded local virtual environments from release-tree artifact scanning.
+- Prevented the readiness checker from failing on bytecode created by importing the checker itself.
+- Added repository-only readiness mode and regression tests for Windows/local-environment behavior.
+- Preserved Composite Risk v1 and all evidence-governance boundaries.
+
 ## v1.0.0-rc.1
 
 - Added installable PEP 517 project metadata and a console entry point.
