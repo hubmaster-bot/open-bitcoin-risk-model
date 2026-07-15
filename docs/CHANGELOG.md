@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.0
+
+- Promoted the corrected v1.0.0-rc.2 codebase to the first stable release.
+- Made the source-cache readiness regression test platform independent on Windows, macOS, and Linux.
+- Finalized stable-version package metadata, installation guidance, release notes, and readiness expectations.
+- Preserved Composite Risk v1, evidence weights, promotion states, and all live decision behaviour.
+
 ## v1.0.0-rc.2
 
 - Added SciPy as an explicit runtime dependency for Spearman correlation.

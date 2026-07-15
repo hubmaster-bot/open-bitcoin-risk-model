@@ -14,7 +14,7 @@ import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-EXPECTED_VERSION = "1.0.0-rc.2"
+EXPECTED_VERSION = "1.0.0"
 SUPPORTED_MIN = (3, 11)
 SUPPORTED_MAX_EXCLUSIVE = (3, 14)
 SECRET_NAMES = (

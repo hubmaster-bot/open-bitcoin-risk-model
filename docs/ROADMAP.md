@@ -8,7 +8,8 @@
 - **v0.10.4:** Multi-provider capital-flow equivalence and validation. **Completed.**
 - **v0.10.5:** Capital-flow outcome validation and formal promotion review. **Completed.**
 - **v1.0.0-rc.2:** Automated release hardening, clean-install verification, packaging cleanup, and governance checklist. **Completed.**
-- **v1.0.0:** Final release after local UI inspection, credentialed live-provider smoke tests, and final governance sign-off.
+- **v1.0.0:** First stable release with corrected cross-platform readiness checks, reproducible packaging, and unchanged Composite Risk v1. **Completed.**
+- **Post-v1.0 operational validation:** Continue credentialed provider smoke tests and deployment-specific UI checks without changing model behaviour.
 - Validate every new evidence source before it can influence a Market Dimension.
 - Preserve Bitcoin Core self-computation as a v2.0 transparency path.
 
