@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.3 — Realized Capital Flow Research
+
+- Added `obrm/research/capital_flow/` as a provider-neutral research module.
+- Added ingestion for realized-cap growth/change, realized value flow, capital inflow/outflow, net capital flow, exchange netflow, and documented custom metrics.
+- Added provenance metadata, canonical Parquet persistence, and SHA-256 integrity verification.
+- Added expanding percentile, 30-day smoothing, 90-day change, yearly percentile, trend direction, acceleration, and Capital Flow Research Score outputs.
+- Added validation hooks and a stable validation view for later outcome and multi-provider testing.
+- Added the Realized Capital Flow Research Streamlit page.
+- Moved Realized Capital Flow from Missing to Research in the Evidence Registry.
+- Added ADR-031, Handbook Chapter 17, Developer Guide Chapter 9, and tests.
+- Preserved Composite Risk v1 and all live decisions.
+
 ## 0.10.2 — Holder Behaviour Research
 
 - Added a provider-neutral daily CSV import pipeline for Holder Behaviour evidence.
