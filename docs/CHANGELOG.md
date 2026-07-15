@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.2 — Holder Behaviour Research
+
+- Added a provider-neutral daily CSV import pipeline for Holder Behaviour evidence.
+- Added canonical schema validation and minimum historical coverage requirements.
+- Added explicit provider, definition, licence, source URL, and SHA-256 provenance.
+- Added support for dormancy, coin days destroyed, long-term-holder supply, dormant supply, and documented distribution metrics.
+- Added no-look-ahead expanding percentiles and 30-day diagnostic scoring.
+- Added the Holder Behaviour Research Streamlit page.
+- Moved Holder Behaviour from Missing to Research in the Evidence Registry.
+- Added holder-behaviour analytics and persistence tests.
+- Added ADR-030, Research Handbook Chapter 16, and Developer Guide Chapter 8.
+- Preserved validated evidence coverage, Composite Risk v1, and all live decisions.
+
 ## 0.10.1 — Fallback Provider Discovery
 
 - Added a structured fallback-provider candidate registry.

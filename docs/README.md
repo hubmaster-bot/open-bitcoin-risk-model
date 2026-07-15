@@ -29,3 +29,10 @@ For understanding why major design decisions were made.
 5. `handbook/04_Composite_Risk.md`
 6. `handbook/05_Decision_Audit.md`
 7. `developer/01_Architecture.md`
+
+## Evidence Expansion reading
+
+- `handbook/14_Evidence_Registry.md`
+- `handbook/15_Fallback_Provider_Discovery.md`
+- `handbook/16_Holder_Behaviour_Research.md`
+- `developer/08_Holder_Behaviour_Data.md`

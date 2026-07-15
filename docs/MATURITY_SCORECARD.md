@@ -16,4 +16,5 @@
 | On-chain research | Research Alpha | Validated evidence remains outside Composite Risk |
 | Evidence Registry | Available | Provider-independent evidence roadmap and coverage |
 | Provider Discovery | Research Alpha | Structured fallback-source assessment |
+| Holder Behaviour | Research Alpha | Portable reviewed dataset, provenance, and diagnostic score |
 | Macro dimensions | Planned | Post-v1.0 research |

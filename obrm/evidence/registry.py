@@ -5,7 +5,9 @@ from __future__ import annotations
 from obrm.evidence.models import (
     EVIDENCE_STATUS_MISSING,
     EVIDENCE_STATUS_PLANNED,
+    EVIDENCE_STATUS_RESEARCH,
     EVIDENCE_STATUS_VALIDATED,
+    PROVIDER_STATUS_AVAILABLE,
     PROVIDER_STATUS_CANDIDATE,
     PROVIDER_STATUS_FORBIDDEN,
     PROVIDER_STATUS_FUTURE,
@@ -44,10 +46,10 @@ EVIDENCE_REGISTRY: tuple[EvidenceItem, ...] = (
         domain="On-Chain",
         intended_dimension="On-Chain",
         purpose="Describe dormancy, spending behaviour, and long-term holder conviction.",
-        status=EVIDENCE_STATUS_MISSING,
+        status=EVIDENCE_STATUS_RESEARCH,
         required_for_dimension=True,
-        documentation="docs/handbook/14_Evidence_Registry.md",
-        target_version="0.10.x",
+        documentation="docs/handbook/16_Holder_Behaviour_Research.md",
+        target_version="0.10.2",
     ),
     EvidenceItem(
         key="realized_capital_flow",
@@ -128,11 +130,26 @@ PROVIDER_MAPPINGS: tuple[EvidenceProviderMapping, ...] = (
     ),
     EvidenceProviderMapping(
         evidence_key="holder_behaviour",
+        provider="Portable Research CSV",
+        provider_metric="User-selected reviewed daily metric",
+        status=PROVIDER_STATUS_AVAILABLE,
+        definition=(
+            "Provider-neutral dormancy, coin-days-destroyed, long-term-holder "
+            "supply, dormant-supply, or documented distribution evidence."
+        ),
+        provenance_note=(
+            "v0.10.2 import pipeline requires definition, licence, source, "
+            "canonical schema validation, and a dataset hash."
+        ),
+        priority=15,
+    ),
+    EvidenceProviderMapping(
+        evidence_key="holder_behaviour",
         provider="Alternative free provider",
         provider_metric=None,
         status=PROVIDER_STATUS_CANDIDATE,
         definition="Dormancy, spent-output, coin-age, or long-term-holder evidence.",
-        provenance_note="Provider discovery is required in the Evidence Expansion phase.",
+        provenance_note="Provider discovery remains open for an automated source adapter.",
         priority=20,
     ),
     EvidenceProviderMapping(

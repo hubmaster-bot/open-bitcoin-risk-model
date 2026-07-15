@@ -50,6 +50,7 @@ sections = {
         ("On-Chain Promotion Review", DOCS / "handbook" / "13_OnChain_Promotion_Review.md"),
         ("Evidence Registry", DOCS / "handbook" / "14_Evidence_Registry.md"),
         ("Fallback Provider Discovery", DOCS / "handbook" / "15_Fallback_Provider_Discovery.md"),
+        ("Holder Behaviour Research", DOCS / "handbook" / "16_Holder_Behaviour_Research.md"),
     ],
     "Developer Guide": [
         ("Architecture Overview", DOCS / "developer" / "01_Architecture.md"),
@@ -59,6 +60,7 @@ sections = {
         ("Research Data Providers", DOCS / "developer" / "05_Research_Data_Providers.md"),
         ("Evidence Registry", DOCS / "developer" / "06_Evidence_Registry.md"),
         ("Provider Discovery", DOCS / "developer" / "07_Provider_Discovery.md"),
+        ("Holder Behaviour Data", DOCS / "developer" / "08_Holder_Behaviour_Data.md"),
     ],
 }
 
@@ -96,6 +98,7 @@ scorecard = [
     ("On-chain research", "Research Alpha", "Validated evidence remains outside Composite Risk"),
     ("Evidence Registry", "Available", "Provider-independent evidence roadmap and coverage"),
     ("Provider Discovery", "Research Alpha", "Structured fallback-source assessment"),
+    ("Holder Behaviour", "Research Alpha", "Portable reviewed dataset and no-look-ahead score"),
     ("Macro dimensions", "Planned", "Post-v1.0 research"),
 ]
 
