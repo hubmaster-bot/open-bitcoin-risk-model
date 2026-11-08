@@ -1,3 +1,7 @@
+# Current release: v1.1.1
+
+Dashboard UX, explainability, and persistent chart annotations are now available. v1.1.1 corrects annotation labels, adds visibility toggles, clarifies log-axis ticks, and improves Windows release checks. Composite Risk v1 remains unchanged.
+
 
 ## v0.10.x — Evidence Expansion
 

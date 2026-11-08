@@ -1,4 +1,23 @@
+# v1.1.1 — Chart Annotation Polish and Windows Maintenance
+
+- Corrected horizontal price labels so they are anchored to the logarithmic BTC price axis.
+- Corrected horizontal risk labels so they remain beside their selected 0–1 risk level.
+- Added persistent per-annotation visibility toggles without deleting saved lines.
+- Replaced ambiguous logarithmic minor labels with explicit USD ticks such as `$2k`, `$5k`, and `$100k`.
+- Improved chart title and legend separation at constrained widths while preserving the full-screen layout.
+- Made the source-cache readiness regression test platform-independent on Windows.
+- Clarified that development caches are safe during local use but must be removed before release packaging.
+- Composite Risk methodology, weights, thresholds, and decision behaviour remain unchanged.
+
 # Changelog
+
+## v1.1.0
+
+- Added a right-side Research Inspector for historical Composite Risk observations.
+- Added persistent vertical date, horizontal price, and horizontal risk lines.
+- Added annotation labels, styles, deletion, clearing, and JSON/CSV export.
+- Pinned yfinance 1.4.1 to avoid the upstream startup regression observed on Windows.
+- Composite Risk methodology and decision behaviour are unchanged.
 
 ## v1.0.0
 

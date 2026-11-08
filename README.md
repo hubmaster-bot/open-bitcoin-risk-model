@@ -4,7 +4,7 @@ OBRM is an evidence-first Bitcoin market-risk research and decision-support appl
 
 ## Release status
 
-This archive is **v1.0.0**, the first stable OBRM release. Composite Risk v1 remains unchanged. Research evidence cannot affect live decisions without a separate, documented promotion and model-design release.
+This archive is **v1.1.1**, a maintenance release for the v1.1 chart-annotation workspace. Composite Risk v1 remains unchanged. Research evidence cannot affect live decisions without a separate, documented promotion and model-design release.
 
 ## Supported Python
 
@@ -33,3 +33,8 @@ python -m pytest
 ```
 
 See `docs/RELEASE_CHECKLIST_v1.0.md` for live-provider and UI checks that require local credentials or manual inspection.
+
+
+## v1.1 chart workspace
+
+The main dashboard includes a right-side Research Inspector and persistent date, price, and risk annotations. v1.1.1 adds correct axis-bound labels, explicit USD log ticks, and per-line visibility toggles. Annotations are stored locally in `data/user/chart_annotations.json` and can be exported as JSON or CSV.

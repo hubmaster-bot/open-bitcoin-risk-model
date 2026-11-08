@@ -20,7 +20,7 @@ def _clean_repository(root: Path) -> None:
 
 
 def test_final_release_version():
-    assert APP_VERSION == "1.0.0"
+    assert APP_VERSION == "1.1.1"
 
 
 def test_repository_checks_pass_for_clean_repository(tmp_path: Path):
@@ -46,8 +46,9 @@ def test_repository_checks_detect_source_cache(tmp_path: Path):
     checks = run_repository_checks(tmp_path)
     artifact_check = next(check for check in checks if check.name == "build_artifacts")
     assert not artifact_check.passed
-    normalized_detail = artifact_check.detail.replace("\\\\", "/").replace("\\", "/")
+    normalized_detail = artifact_check.detail.replace("\\", "/")
     assert "obrm/core/__pycache__" in normalized_detail
+    assert "remove before packaging" in artifact_check.detail
 
 
 def test_environment_checks_are_separate_from_repository_checks(monkeypatch):

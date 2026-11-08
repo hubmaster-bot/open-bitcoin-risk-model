@@ -33,3 +33,5 @@ data/database/*
 # OS files
 .DS_Store
 Thumbs.db
+# User-local dashboard state
+data/user/

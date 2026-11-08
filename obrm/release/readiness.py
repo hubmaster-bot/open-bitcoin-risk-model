@@ -14,7 +14,7 @@ import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-EXPECTED_VERSION = "1.0.0"
+EXPECTED_VERSION = "1.1.1"
 SUPPORTED_MIN = (3, 11)
 SUPPORTED_MAX_EXCLUSIVE = (3, 14)
 SECRET_NAMES = (
@@ -77,10 +77,10 @@ def _build_artifacts(root: Path) -> list[str]:
         relative = path.relative_to(root)
         if path.is_dir() and path.name in {"__pycache__", ".pytest_cache", ".ruff_cache"}:
             if relative not in SELF_IMPORT_CACHE_DIRS:
-                artifacts.append(str(relative))
+                artifacts.append(relative.as_posix())
         elif path.is_file() and path.suffix in {".pyc", ".pyo"}:
             if path.parent.relative_to(root) not in SELF_IMPORT_CACHE_DIRS:
-                artifacts.append(str(relative))
+                artifacts.append(relative.as_posix())
     return sorted(set(artifacts))
 
 
@@ -96,7 +96,7 @@ def run_repository_checks(root: Path | None = None) -> list[Check]:
         Check(
             "build_artifacts",
             not artifacts,
-            "clean" if not artifacts else f"found: {artifacts[:10]}",
+            "clean" if not artifacts else f"development caches/build artifacts found; remove before packaging: {artifacts[:10]}",
         ),
     ]
 
